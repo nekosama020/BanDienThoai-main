@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    colors="true"
+    verbose="true"
+    stopOnFailure="false"
+    beStrictAboutOutputDuringTests="false"
+    beStrictAboutChangesToGlobalState="false"
+    backupGlobals="false"
+    outputBuffering="false"
+>
+    <testsuites>
+        <testsuite name="BanDienThoai Test Suite">
+            <directory>test</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
