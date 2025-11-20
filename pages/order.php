@@ -4,7 +4,7 @@ include '../includes/db.php';
 
 // Kiểm tra người dùng đã đăng nhập chưa
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
+    header("Location: BanDienThoai-main/login.php");
     exit();
 }
 

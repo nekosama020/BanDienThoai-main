@@ -3,7 +3,7 @@ session_start();
 include '../includes/db.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../auth/login.php");
+    header("Location: BanDienThoai-main/login.php");
     exit();
 }
 
@@ -21,7 +21,7 @@ $result = $stmt->get_result();
 $cart_items = $result->fetch_all(MYSQLI_ASSOC);
 
 if (empty($cart_items)) {
-    echo "<script>alert('Giỏ hàng trống!'); window.location.href='../cart/cart.php';</script>";
+    echo "<script>alert('Giỏ hàng trống!'); window.location.href='BanDienThoai-main/page/checkout/cart.php';</script>";
     exit();
 }
 

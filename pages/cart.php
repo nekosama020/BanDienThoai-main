@@ -96,7 +96,7 @@ foreach ($cart_items as $item) {
             </table>
         <?php endif; ?>
         <div class="d-flex justify-content-between">
-        <a href="/BanDienThoai/index.php" class="btn btn-primary">Tiếp tục mua sắm</a>
+        <a href="/BanDienThoai-main/index.php" class="btn btn-primary">Tiếp tục mua sắm</a>
         <h4>Tổng cộng: <strong><?= number_format($totalPrice, 0, ',', '.') ?> đ</strong></h4>
         <?php if (!empty($cart_items)): ?>
         <a href="checkout.php" class="btn btn-success">Thanh toán</a>

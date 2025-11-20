@@ -42,10 +42,10 @@ if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'Admin') {
         <div class="row">
             <nav class="col-md-2 d-none d-md-block sidebar p-3">
                 <h4 class="text-center">ADMIN</h4>
-                <a class="menu-item" data-page="/BanDienThoai/admin/manage_product.php">Quản lý Sản phẩm</a>
-                <a class="menu-item" data-page="/BanDienThoai/admin/manage_category.php">Quản lý Danh mục</a>
-                <a class="menu-item" data-page="/BanDienThoai/admin/manage_order.php">Quản lý Đơn hàng</a>
-                <a class="menu-item" data-page="/BanDienThoai/admin/statistic.php">Thống kê</a>
+                <a class="menu-item" data-page="/BanDienThoai-main/admin/manage_product.php">Quản lý Sản phẩm</a>
+                <a class="menu-item" data-page="/BanDienThoai-main/admin/manage_category.php">Quản lý Danh mục</a>
+                <a class="menu-item" data-page="/BanDienThoai-main/admin/manage_order.php">Quản lý Đơn hàng</a>
+                <a class="menu-item" data-page="/BanDienThoai-main/admin/statistic.php">Thống kê</a>
             </nav>
             <main class="col-md-10 p-4" id="dashboard-content">
                 <h2>Dashboard</h2>
