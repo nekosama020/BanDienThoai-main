@@ -1,6 +1,6 @@
 <?php
 include '../includes/db.php';
-include 'BanDienThoai-main/includes/header.php';
+include '../includes/header.php';
 
 // Kiểm tra xem có tham số product_id không
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {

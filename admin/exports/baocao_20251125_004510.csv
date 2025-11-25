@@ -1,0 +1,2 @@
+﻿"JSON_OBJECT('doanh_thu_hom_nay', SUM(total_price))"
+"{""doanh_thu_hom_nay"": 65970000.00}"

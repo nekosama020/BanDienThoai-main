@@ -17,7 +17,7 @@ if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'Admin') {
     <style>
         body {
             background-image: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ),
-            url('background.jpg');
+            url('pexels-athenea-codjambassis-rossitto-472760075-26752989.jpg');
             background-size: cover;
         }
         .sidebar {
@@ -68,5 +68,27 @@ if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'Admin') {
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <a href="../index.php" style="
+        position: fixed;
+        top: 10px;
+        right: 20px;
+        z-index: 9999;
+        width: 60px;
+        height: 60px;
+        background-color: #198754;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        font-size: 30px;
+        transition: transform 0.3s;
+        border: 2px solid white;
+    " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" title="Quay về trang chủ">
+        🏠
+    </a>
+    <?php include '../includes/chatbot.php'; ?>
 </body>
 </html>

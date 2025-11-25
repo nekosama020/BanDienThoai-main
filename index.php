@@ -54,8 +54,8 @@ $products = $conn->query("SELECT * FROM products $whereQuery");
 
                             <h6 class="mt-2"><?= htmlspecialchars($product['name']) ?></h6>
                             <p class="text-danger"><?= number_format($product['price'], 0, ',', '.') ?> đ</p>
-                            <a class="btn btn-sm btn-info" href="/BanDienThoai/pages/product.php?id=<?= $product['id'] ?>">Chi tiết</a>
-                            <form action="/BanDienThoai/process_cart.php" method="POST">
+                            <a class="btn btn-sm btn-info" href="pages/product.php?id=<?= $product['id'] ?>">Chi tiết</a>
+                            <form action="process_cart.php" method="POST" class="mt-2">
                                 <input type="hidden" name="action" value="add">
                                 <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
                                 <input type="hidden" name="quantity" value="1">

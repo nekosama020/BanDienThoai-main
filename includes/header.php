@@ -1,7 +1,15 @@
 <?php
-session_start();
-?>
+// 1. Kiểm tra session đã start chưa để tránh lỗi
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+// 2. TẠO ĐƯỜNG DẪN TỰ ĐỘNG (QUAN TRỌNG NHẤT)
+// Kiểm tra xem file hiện tại đang nằm ở đâu để tính đường dẫn
+// Nếu đang ở trong thư mục 'pages' hoặc 'admin', ta phải lùi ra ngoài bằng '../'
+$current_dir = basename(dirname($_SERVER['PHP_SELF']));
+$path = ($current_dir == 'pages' || $current_dir == 'admin') ? '../' : '';
+?>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -11,60 +19,61 @@ session_start();
     <title>FAUNA MART</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .container-custom {
-            width: 70%;
-            margin: 0 auto;
-        }
-        .product-card {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-            background: #f8f9fa;
-            margin-bottom: 15px;
-        }
-        .product-image {
-            height: 150px;
-            background:transparent;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Đảm bảo toàn bộ ảnh hiển thị trong khung */
-        }
-        .navbar-brand img {
-            max-width: 200;
-            max-height: 100;
-            object-fit: contain;
-        }
+        .container-custom { width: 80%; margin: 0 auto; }
+        .product-card { border: 1px solid #ddd; padding: 10px; text-align: center; background: #f8f9fa; margin-bottom: 15px; border-radius: 8px; transition: 0.3s; }
+        .product-card:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .product-image { height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 10px; }
+        .product-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .navbar-brand img { height: 40px; width: auto; }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-dark p-2">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-2">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/BanDienThoai-main/index.php"><img src="/BanDienThoai-main/includes/Logo.png" alt="FaunaMart" alt="FaunaMart" style="height: 50px; width: auto;"></a>
-            <form class="d-flex" action="index.php" method="GET">
-            <input class="form-control  flex-grow-1 mx-2" type="search" name="search" placeholder="Tìm kiếm..." value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
-            <button class="btn btn-outline-light ms-2" type="submit">Tìm</button>
-        </form>
-            <div>
-            <?php if (isset($_SESSION['username'])): ?>
-                <?php if ($_SESSION['roles'] === 'Admin'):?>
-                <a class="btn btn-light" href="/BanDienThoai-main/admin/dashboard.php">Dashboard</a>
+            <a class="navbar-brand" href="<?= $path ?>index.php">
+                <?php if(file_exists($path . 'includes/Logo.png')): ?>
+                    <img src="<?= $path ?>includes/Logo.png" alt="FaunaMart">
+                <?php else: ?>
+                    FAUNA MART
                 <?php endif; ?>
-                <span class="text-white me-2">Xin chào, <?= htmlspecialchars($_SESSION['username']) ?></span>
-                <a class="btn btn-warning" href="/BanDienThoai-main/logout.php">Đăng xuất</a>
-                <a class="btn btn-warning" href="/BanDienThoai-main/pages/profile.php">Hồ sơ</a>
-                <a class="btn btn-light" href="/BanDienThoai/pages-main/order.php">Đơn hàng</a>
-            <?php else: ?>
-                <a class="btn btn-outline-light" href="/BanDienThoai-main/login.php?tab=login">Đăng Nhập</a>
-                <a class="btn btn-outline-light" href="/BanDienThoai-main/login.php?tab=register">Đăng Ký</a>
-            <?php endif; ?>
-            <a class="btn btn-light" href="/BanDienThoai-main/pages/cart.php">Giỏ Hàng</a>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <form class="d-flex mx-auto" action="<?= $path ?>index.php" method="GET" style="width: 50%;">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Tìm kiếm sản phẩm..." value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
+                    <button class="btn btn-outline-light" type="submit">Tìm</button>
+                </form>
+
+                <div class="d-flex align-items-center">
+                    <?php if (isset($_SESSION['username'])): ?>
+                        
+                        <?php 
+                        // Lưu ý: Trong SQL Dump cột là 'role', code bạn là 'roles'. 
+                        // Hãy chắc chắn session lưu đúng tên key. Tôi giữ nguyên 'roles' theo code bạn.
+                        if (isset($_SESSION['roles']) && $_SESSION['roles'] === 'Admin'): 
+                        ?>
+                            <a class="btn btn-sm btn-danger me-2" href="<?= $path ?>admin/dashboard.php">Quản trị</a>
+                        <?php endif; ?>
+
+                        <span class="text-white me-2">Hi, <?= htmlspecialchars($_SESSION['username']) ?></span>
+                        
+                        <a class="btn btn-sm btn-info me-2 text-white" href="<?= $path ?>pages/order.php">Đơn hàng</a>
+                        <a class="btn btn-sm btn-warning me-2" href="<?= $path ?>pages/profile.php">Hồ sơ</a>
+                        <a class="btn btn-sm btn-secondary me-2" href="<?= $path ?>logout.php">Thoát</a>
+
+                    <?php else: ?>
+                        <a class="btn btn-outline-light me-2" href="<?= $path ?>login.php?tab=login">Đăng Nhập</a>
+                        <a class="btn btn-outline-light me-2" href="<?= $path ?>login.php?tab=register">Đăng Ký</a>
+                    <?php endif; ?>
+                    
+                    <a class="btn btn-success position-relative" href="<?= $path ?>pages/cart.php">
+                        Giỏ Hàng
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
