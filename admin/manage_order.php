@@ -118,7 +118,6 @@ $result = $conn->query($sql);
             </tr>
             <?php endwhile; ?>
         </tbody>
-        <?php include __DIR__ . '/chatbot.php'; ?>
     </table>
 </div>
 

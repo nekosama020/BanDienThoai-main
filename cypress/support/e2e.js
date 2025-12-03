@@ -15,3 +15,10 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+// cypress/support/e2e.js
+
+// Import thư viện đúng tên
+import { slowCypressDown } from 'cypress-slow-down';
+
+// Kích hoạt làm chậm (1 giây cho mỗi hành động)
+slowCypressDown(200);

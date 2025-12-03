@@ -1,0 +1,8 @@
+﻿order_id,total_price,status,order_date,product_id,product_name,quantity,unit_price,user_id,username,email,phone
+26,33990000.00,Completed,"2025-11-24 20:43:24",50,"iPhone 16 Pro Max 256GB",1,33990000.00,46,nekosama,dung2004@gmail.com,
+27,51980000.00,Completed,"2025-11-24 20:44:26",48,"Red Magic 10 Pro",1,17990000.00,46,nekosama,dung2004@gmail.com,
+27,51980000.00,Completed,"2025-11-24 20:44:26",50,"iPhone 16 Pro Max 256GB",1,33990000.00,46,nekosama,dung2004@gmail.com,
+28,35980000.00,Completed,"2025-11-25 06:29:27",48,"Red Magic 10 Pro",1,17990000.00,46,nekosama,dung2004@gmail.com,
+28,35980000.00,Completed,"2025-11-25 06:29:27",48,"Red Magic 10 Pro",1,17990000.00,46,nekosama,dung2004@gmail.com,
+29,29990000.00,Completed,"2025-11-25 06:37:29",52,"OPPO Find N5",1,29990000.00,46,nekosama,dung2004@gmail.com,
+30,17990000.00,Completed,"2025-11-25 06:47:39",67,"OPPO Reno10 Pro+ 5G 12GB 256GB",1,17990000.00,46,nekosama,dung2004@gmail.com,

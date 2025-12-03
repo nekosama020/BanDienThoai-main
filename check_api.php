@@ -1,6 +1,6 @@
 <?php
 // Dán API Key của bạn vào đây
-define('MY_API_KEY', 'AIzaSyDOIj5bMjr0eibzkoZOygRCmDQmruik8T4');
+define('MY_API_KEY', 'AIzaSyCEu2pTMkykNg50IE8xaQ7EyAVNQvkkT1U');
 
 $url = "https://generativelanguage.googleapis.com/v1beta/models?key=" . MY_API_KEY;
 
