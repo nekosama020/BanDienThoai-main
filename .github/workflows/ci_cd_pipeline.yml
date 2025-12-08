@@ -37,6 +37,13 @@ jobs:
         run: |
           mysql -h 127.0.0.1 -u root -proot dbphonestore < test/dbphonestore.sql
 
+    # ... (Sau bước Import Database) ...
+
+      # [MỚI] Bước này tạo file env.php từ Secret của GitHub
+      - name: Create API Key File
+        run: |
+          echo "<?php define('GEMINI_API_KEY', '${{ secrets.GEMINI_API_KEY }}'); ?>" > includes/env.php
+
       # 5. Chạy Server PHP (Giả lập Apache tại cổng 8000)
       - name: Start PHP Web Server
         run: |

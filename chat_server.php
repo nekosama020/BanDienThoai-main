@@ -3,17 +3,41 @@
 session_start();
 header('Content-Type: application/json');
 
-// 1. CẤU HÌNH
-// Bạn nhớ điền lại API Key vào đây nhé
-define('GEMINI_API_KEY', 'AIzaSyAu1xf49rvJqq2u7jMHAv98H-zp9OLlyp8'); 
+// --- PHẦN SỬA ĐỔI: NẠP API KEY AN TOÀN ---
 
-$conn = new mysqli("localhost", "root", "", "dbphonestore");
-$conn->set_charset("utf8mb4");
+// 1. Nạp file cấu hình (Ưu tiên tìm file env.php để lấy key khi chạy local)
+// Kiểm tra file env.php ở cùng thư mục hiện tại
+if (file_exists(__DIR__ . '/includes/env.php')) {
+    include __DIR__ . '/includes/env.php';
+} 
+// Hoặc kiểm tra file env.php ở thư mục cha (nếu bạn đặt ở đó để an toàn hơn)
+elseif (file_exists(dirname(__DIR__) . '/includes/env.php')) {
+    include dirname(__DIR__) . '/includes/env.php';
+}
+
+// 2. Lấy API Key an toàn
+// Logic:
+// - Kiểm tra xem hằng số GEMINI_API_KEY đã được định nghĩa chưa (từ file env.php).
+// - Nếu chưa, thử lấy từ biến môi trường (getenv) - hữu ích khi deploy lên các nền tảng cloud như Heroku, Vercel, hoặc dùng Docker.
+// - Dòng code này có thể bị editor báo đỏ nếu không tìm thấy định nghĩa, nhưng khi chạy thực tế sẽ hoạt động nếu file env.php tồn tại.
+$apiKey = defined('GEMINI_API_KEY') ? GEMINI_API_KEY : getenv('GEMINI_API_KEY');
+
+// 3. Kiểm tra xem đã có API Key chưa
+if (!$apiKey) {
+    // Ghi log lỗi để debug (tùy chọn)
+    error_log("Lỗi: Không tìm thấy API Key Gemini.");
+    // Trả về lỗi cho client
+    die(json_encode(['reply' => 'Lỗi Server: Chưa cấu hình API Key. Vui lòng kiểm tra file env.php hoặc biến môi trường.']));
+}
+
+// --- HẾT PHẦN SỬA ĐỔI ---
+
 
 // --- HÀM GỌI GEMINI (ĐÃ NÂNG CẤP ĐỂ NHẬN ẢNH) ---
 function callGemini($prompt, $image_base64 = null) {
+    global $apiKey; // Sử dụng biến $apiKey đã lấy ở trên
     
-    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . GEMINI_API_KEY;
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . $apiKey;
     
     $parts = [];
     
@@ -69,6 +93,7 @@ if (!$user_msg && !$image_data) exit(json_encode(['reply' => '...']));
 
 $role = $_SESSION['roles'] ?? 'Guest'; 
 
+// ... (Phần còn lại của code giữ nguyên như cũ) ...
 // =================================================================
 // PHẦN 1: DÀNH RIÊNG CHO ADMIN (GIỮ NGUYÊN LOGIC CỦA BẠN)
 // =================================================================
@@ -123,6 +148,12 @@ if ($role === 'Admin') {
     }
 
     try {
+        // Giả sử $conn đã được include từ file cấu hình DB ở đầu file hoặc file này được include vào nơi có $conn
+        // Nếu chưa có $conn, bạn cần include file kết nối DB ở đây
+        if (!isset($conn)) {
+             include __DIR__ . '/includes/db.php'; // Điều chỉnh đường dẫn cho phù hợp
+        }
+
         $res = $conn->query($sql);
         $data = [];
         if ($res) while ($row = $res->fetch_assoc()) $data[] = $row;
@@ -168,6 +199,11 @@ if ($role === 'Admin') {
 // PHẦN 2: KHÁCH HÀNG (TƯ VẤN ẢNH + SẢN PHẨM)
 // =================================================================
 else {
+    // Nếu chưa có $conn, bạn cần include file kết nối DB ở đây
+    if (!isset($conn)) {
+         include __DIR__ . '/includes/db.php'; // Điều chỉnh đường dẫn cho phù hợp
+    }
+
     // 1. Lấy danh sách sản phẩm từ DB để "mớm" cho AI
     $sql_prods = "SELECT name, price, specifications FROM products WHERE status='Active'";
     $result = $conn->query($sql_prods);

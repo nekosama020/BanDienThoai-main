@@ -1,3 +1,7 @@
 C:\Users\Asus\Documents\apache-jmeter-5.6.3\apache-jmeter-5.6.3\bin\jmeter.bat -n -t kiem_thu_hieu_nang_client.jmx -l ket_qua_stress.jtl
 
 npx cypress open
+
+git add .
+git commit -m "Hoan thien he thong CI/CD tu dong"
+git push origin main

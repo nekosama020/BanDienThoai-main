@@ -1,6 +1,6 @@
 <?php
 // Dán API Key của bạn vào đây
-define('MY_API_KEY', 'AIzaSyAu1xf49rvJqq2u7jMHAv98H-zp9OLlyp8');
+define('MY_API_KEY', '');
 
 $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . GEMINI_API_KEY;
 $ch = curl_init($url);

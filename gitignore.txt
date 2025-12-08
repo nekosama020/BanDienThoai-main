@@ -8,3 +8,4 @@ composer.lock
 phpunit.xml.cache
 *.log
 *.tmp
+includes/env.php
