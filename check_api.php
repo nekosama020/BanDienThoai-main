@@ -1,9 +1,8 @@
 <?php
 // Dán API Key của bạn vào đây
-define('MY_API_KEY', 'AIzaSyCEu2pTMkykNg50IE8xaQ7EyAVNQvkkT1U');
+define('MY_API_KEY', 'AIzaSyAu1xf49rvJqq2u7jMHAv98H-zp9OLlyp8');
 
-$url = "https://generativelanguage.googleapis.com/v1beta/models?key=" . MY_API_KEY;
-
+$url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . GEMINI_API_KEY;
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Tắt kiểm tra SSL để tránh lỗi XAMPP

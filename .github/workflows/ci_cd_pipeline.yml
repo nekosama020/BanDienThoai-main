@@ -1,0 +1,74 @@
+name: CI/CD Pipeline - Web Ban Dien Thoai
+
+# Kích hoạt khi có code mới đẩy lên nhánh main
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  test-suite:
+    runs-on: ubuntu-latest
+
+    # 1. Dựng Database ảo (Service MySQL)
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: dbphonestore
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      # 2. Tải code về máy ảo
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 3. Cài đặt PHP & Extension
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mysqli
+
+      # 4. Nạp dữ liệu vào Database ảo
+      - name: Import Database
+        run: |
+          mysql -h 127.0.0.1 -u root -proot dbphonestore < test/dbphonestore.sql
+
+      # 5. Chạy Server PHP (Giả lập Apache tại cổng 8000)
+      - name: Start PHP Web Server
+        run: |
+          php -S 127.0.0.1:8000 &
+
+      # 6. Cài đặt Cypress và các thư viện liên quan
+      - name: Install Dependencies
+        run: npm ci
+
+      # 7. CHẠY TEST CYPRESS
+      # - Nếu có lỗi, nó sẽ báo Đỏ (Failed) đúng như thực tế.
+      # - Cypress mặc định sẽ chạy HẾT các file test chứ không dừng giữa chừng.
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v6
+        with:
+          wait-on: 'http://127.0.0.1:8000' # Đợi server bật xong mới test
+        env:
+          # Cấu hình môi trường cho Cypress
+          CYPRESS_baseUrl: 'http://127.0.0.1:8000'
+          # Cấu hình Database cho PHP kết nối
+          DB_HOST: '127.0.0.1'
+          DB_USER: 'root'
+          DB_PASS: 'root'
+          DB_NAME: 'dbphonestore'
+
+      # 8. LƯU BẰNG CHỨNG (Video/Ảnh lỗi)
+      # if: always() -> Đảm bảo bước này luôn chạy dù bước Test ở trên có bị lỗi (Đỏ)
+      - name: Upload Test Evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-evidence-report
+          path: |
+            cypress/screenshots
+            cypress/videos

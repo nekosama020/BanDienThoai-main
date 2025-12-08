@@ -5,15 +5,15 @@ header('Content-Type: application/json');
 
 // 1. CẤU HÌNH
 // Bạn nhớ điền lại API Key vào đây nhé
-define('GEMINI_API_KEY', 'AIzaSyCEu2pTMkykNg50IE8xaQ7EyAVNQvkkT1U'); 
+define('GEMINI_API_KEY', 'AIzaSyAu1xf49rvJqq2u7jMHAv98H-zp9OLlyp8'); 
 
 $conn = new mysqli("localhost", "root", "", "dbphonestore");
 $conn->set_charset("utf8mb4");
 
 // --- HÀM GỌI GEMINI (ĐÃ NÂNG CẤP ĐỂ NHẬN ẢNH) ---
 function callGemini($prompt, $image_base64 = null) {
-    // Dùng model Gemini 2.0 Flash (Hỗ trợ nhìn và đọc cực nhanh)
-    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" . GEMINI_API_KEY;
+    
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . GEMINI_API_KEY;
     
     $parts = [];
     
