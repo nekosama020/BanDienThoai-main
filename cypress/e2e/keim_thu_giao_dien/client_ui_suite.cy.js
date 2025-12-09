@@ -105,7 +105,7 @@ describe('Kiểm thử Giao diện Khách hàng (Đã Đăng nhập)', () => {
   it('Trang Giỏ hàng: Bảng và Nút thao tác', () => {
     // Thêm hàng để có giao diện test
     cy.get('.product-card button[type="submit"]').first().click();
-    cy.visit('http://localhost/BanDienThoai-main/pages/cart.php');
+    cy.visit('/pages/cart.php');
 
     // 1. Kiểm tra Bảng
     cy.get('table.table').should('be.visible');
