@@ -65,7 +65,7 @@ describe('Quy trình Thanh toán & Đặt hàng (Checkout Flow)', () => {
     // Click vào link giả lập mà bạn đã tạo
     // Link chứa href="fake_payment_success.php"
     cy.get('a[href*="fake_payment_success.php"]').click();
-
+    cy.wait(3000);
     // --- BƯỚC 7: KIỂM TRA QUAY VỀ TRANG CHỦ ---
     // Bạn nói trang fake sẽ tự đẩy về trang chính
     // Ta kiểm tra xem URL có quay về index.php hay không
