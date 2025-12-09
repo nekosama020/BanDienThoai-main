@@ -9,15 +9,16 @@ describe('Chức năng Giỏ hàng (Tập trung vào iPhone 14 Pro Max)', () => 
   beforeEach(() => {
     // 1. Đăng nhập
     cy.session('customerAuth', () => {
-      cy.visit('http://localhost/BanDienThoai-main/login.php');
+      cy.visit('/login.php');
       cy.get('#loginEmail').type('dung2004@gmail.com'); // Thay email thật
       cy.get('#loginPassword').type('10120204');             // Thay pass thật
       cy.get('button[name="login"]').click();
+
       cy.url().should('include', 'index.php');
     });
 
     // 2. Vào trang chủ
-    cy.visit('http://localhost/BanDienThoai-main/index.php');
+    cy.visit('/index.php');
   });
 
   // ======================================================
@@ -31,7 +32,7 @@ describe('Chức năng Giỏ hàng (Tập trung vào iPhone 14 Pro Max)', () => 
       .click();
 
     // 2. Vào giỏ hàng
-    cy.visit('http://localhost/BanDienThoai-main/pages/cart.php');
+    cy.visit('/pages/cart.php');
 
     // 3. Kiểm tra trong bảng giỏ hàng phải có tên sản phẩm đó
     cy.get('table tbody').should('contain', targetProduct);
@@ -43,7 +44,7 @@ describe('Chức năng Giỏ hàng (Tập trung vào iPhone 14 Pro Max)', () => 
   it(`Cập nhật số lượng ${targetProduct} lên 5`, () => {
     // --- CHUẨN BỊ ---
     cy.contains('.product-card', targetProduct).find('button[type="submit"]').click();
-    cy.visit('http://localhost/BanDienThoai-main/pages/cart.php');
+    cy.visit('/pages/cart.php');
 
     // Tìm dòng chứa sản phẩm
     cy.contains('tr', targetProduct).as('targetRow');
@@ -78,7 +79,7 @@ describe('Chức năng Giỏ hàng (Tập trung vào iPhone 14 Pro Max)', () => 
   it(`Xóa ${targetProduct} khỏi giỏ hàng`, () => {
     // --- BƯỚC CHUẨN BỊ: THÊM HÀNG ---
     cy.contains('.product-card', targetProduct).find('button[type="submit"]').click();
-    cy.visit('http://localhost/BanDienThoai-main/pages/cart.php');
+    cy.visit('/pages/cart.php');
 
     // --- BẮT ĐẦU TEST ---
     // 1. Kiểm tra chắc chắn sản phẩm đang có trong giỏ

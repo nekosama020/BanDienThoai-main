@@ -1,7 +1,7 @@
 describe('Kiểm thử Giao diện Quản trị viên (Admin UI Suite)', () => {
 
-  const loginUrl = 'http://localhost/BanDienThoai-main/admin/login.php'; // Hoặc login.php thường
-  const dashboardUrl = 'http://localhost/BanDienThoai-main/admin/dashboard.php';
+  const loginUrl = '/admin/login.php'; // Hoặc login.php thường
+  const dashboardUrl = '/admin/dashboard.php';
 
   // ======================================================
   // BƯỚC CHUẨN BỊ: ĐĂNG NHẬP ADMIN
@@ -9,7 +9,7 @@ describe('Kiểm thử Giao diện Quản trị viên (Admin UI Suite)', () => {
   beforeEach(() => {
     cy.session('adminUISession', () => {
       // 1. Vào trang login (Nếu admin có trang login riêng thì sửa url)
-      cy.visit('http://localhost/BanDienThoai-main/login.php'); 
+      cy.visit('/login.php'); 
 
       // 2. Nhập thông tin Admin (Theo thông tin bạn cung cấp)
       cy.get('#loginEmail').type('admin@admin.admin'); 

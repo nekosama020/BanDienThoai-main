@@ -14,7 +14,7 @@ describe('Chức năng Chatbot AI', () => {
     }).as('chatAPI');
 
     // 2. Vào trang chủ
-    cy.visit('http://localhost/BanDienThoai-main/index.php');
+    cy.visit('/index.php');
   });
 
   // ======================================================

@@ -3,7 +3,7 @@ describe('Chức năng Tìm kiếm & Xem chi tiết sản phẩm', () => {
   // Chạy trước mỗi test case: Vào trang chủ
   beforeEach(() => {
     // Đảm bảo URL này đúng với localhost của bạn
-    cy.visit('http://localhost/BanDienThoai-main/index.php');
+    cy.visit('/index.php');
   });
 
   // ======================================================

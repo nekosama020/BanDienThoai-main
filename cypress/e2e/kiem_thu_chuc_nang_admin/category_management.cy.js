@@ -8,7 +8,7 @@ describe('Quản lý Danh mục (Theo luồng người dùng thực tế)', () =
   // ======================================================
   beforeEach(() => {
     // 1. Vào trang chủ trước
-    cy.visit('http://localhost/BanDienThoai-main/index.php');
+    cy.visit('/index.php');
 
     // 2. Tìm và bấm nút "Đăng Nhập" trên thanh menu
     // (Nếu bạn chưa đăng nhập thì nút này mới hiện)
@@ -43,67 +43,107 @@ describe('Quản lý Danh mục (Theo luồng người dùng thực tế)', () =
   // TEST CASE: THÊM -> SỬA -> XÓA
   // ======================================================
   it('Thêm danh mục mới, sau đó Sửa và cuối cùng Xóa sạch', () => {
-    // --- PHẦN 1: THÊM DANH MỤC (ADD) ---
     
-        // 1. Click nút "Thêm danh mục"
-        cy.contains('button', 'Thêm danh mục').click();
-    
-        // 2. Form hiện ra, nhập tên danh mục
-        cy.get('#categoryFormContainer').should('be.visible');
-        cy.get('#category_name').type(categoryName);
-    
-        // 3. Bấm Lưu
-        cy.get('#categoryForm button[type="submit"]').click();
-    
-        // 4. Xử lý Alert & Chờ load
-        cy.on('window:alert', (text) => {
-           // Cypress tự động đóng alert
-        });
-    
-        // QUAN TRỌNG: Chờ 1 giây để bảng danh mục kịp reload lại dòng mới
-        cy.wait(1000);
-    
-        // 5. Kiểm tra danh mục mới đã xuất hiện trong bảng
-        cy.contains('#categoryList tr', categoryName).should('be.visible');
+// --- PHẦN 1: THÊM DANH MỤC (ADD) ---
     
     
-        // --- PHẦN 2: SỬA DANH MỤC (EDIT) ---
+    // 1. Click nút "Thêm danh mục"
     
-        // 1. Tìm dòng chứa danh mục vừa tạo
-        cy.contains('tr', categoryName).as('targetRow');
-    
-        // 2. Tìm nút "Sửa" trong dòng đó và click
-        cy.get('@targetRow').contains('button', 'Sửa').click();
-    
-        // 3. Form hiện ra, nhập tên mới
-        cy.get('#category_name').clear().type(categoryNameUpdated);
-    
-        // 4. Bấm Lưu
-        cy.get('#categoryForm button[type="submit"]').click();
-    
-        // QUAN TRỌNG: Chờ 1 giây để code JS cập nhật lại tên mới trên giao diện
-        cy.wait(1000);
-    
-        // 5. Kiểm tra tên trong bảng đã đổi thành tên mới
-        cy.contains('#categoryList tr', categoryNameUpdated).should('be.visible');
+    cy.contains('button', 'Thêm danh mục').click();
     
     
-        // --- PHẦN 3: XÓA DANH MỤC (DELETE) ---
+    // 2. Form hiện ra, nhập tên danh mục
     
-        // 1. Tìm lại dòng chứa tên MỚI
-        cy.contains('tr', categoryNameUpdated).as('newTargetRow');
+    cy.get('#categoryFormContainer').should('be.visible');
     
-        // 2. Tìm nút "Xóa" trong dòng đó và click
-        cy.get('@newTargetRow').contains('button', 'Xóa').click();
+    cy.get('#category_name').type(categoryName);
     
-        // 3. Xử lý hộp thoại xác nhận (Confirm) - Tự động bấm OK
-        cy.on('window:confirm', () => true); 
     
-        // QUAN TRỌNG: Chờ 1 giây để dòng đó bị xóa khỏi HTML
-        cy.wait(1000);
+    // 3. Bấm Lưu
     
-        // 4. Kiểm tra danh mục đã biến mất hoàn toàn khỏi bảng
-        cy.get('#categoryList').should('not.contain', categoryNameUpdated);
+    cy.get('#categoryForm button[type="submit"]').click();
+    
+    
+    // 4. Xử lý Alert & Chờ load
+    
+    cy.on('window:alert', (text) => {
+    
+       // Cypress tự động đóng alert
+    
+    });
+    
+    
+    // QUAN TRỌNG: Chờ 1 giây để bảng danh mục kịp reload lại dòng mới
+    
+    cy.wait(1000);
+    
+    
+    // 5. Kiểm tra danh mục mới đã xuất hiện trong bảng
+    
+    cy.contains('#categoryList tr', categoryName).should('be.visible');
+    
+    
+    
+    // --- PHẦN 2: SỬA DANH MỤC (EDIT) ---
+    
+    
+    // 1. Tìm dòng chứa danh mục vừa tạo
+    
+    cy.contains('tr', categoryName).as('targetRow');
+    
+    
+    // 2. Tìm nút "Sửa" trong dòng đó và click
+    
+    cy.get('@targetRow').contains('button', 'Sửa').click();
+    
+    
+    // 3. Form hiện ra, nhập tên mới
+    
+    cy.get('#category_name').clear().type(categoryNameUpdated);
+    
+    
+    // 4. Bấm Lưu
+    
+    cy.get('#categoryForm button[type="submit"]').click();
+    
+    
+    // QUAN TRỌNG: Chờ 1 giây để code JS cập nhật lại tên mới trên giao diện
+    
+    cy.wait(1000);
+    
+    
+    // 5. Kiểm tra tên trong bảng đã đổi thành tên mới
+    
+    cy.contains('#categoryList tr', categoryNameUpdated).should('be.visible');
+    
+    
+    
+    // --- PHẦN 3: XÓA DANH MỤC (DELETE) ---
+    
+    
+    // 1. Tìm lại dòng chứa tên MỚI
+    
+    cy.contains('tr', categoryNameUpdated).as('newTargetRow');
+    
+    
+    // 2. Tìm nút "Xóa" trong dòng đó và click
+    
+    cy.get('@newTargetRow').contains('button', 'Xóa').click();
+    
+    
+    // 3. Xử lý hộp thoại xác nhận (Confirm) - Tự động bấm OK
+    
+    cy.on('window:confirm', () => true); 
+    
+    
+    // QUAN TRỌNG: Chờ 1 giây để dòng đó bị xóa khỏi HTML
+    
+    cy.wait(1000);
+    
+    
+    // 4. Kiểm tra danh mục đã biến mất hoàn toàn khỏi bảng
+    
+    cy.get('#categoryList').should('not.contain', categoryNameUpdated);
   });
 
 });

@@ -8,7 +8,7 @@ describe('Quy trình Thanh toán & Đặt hàng (Checkout Flow)', () => {
   beforeEach(() => {
     // 1. Đăng nhập
     cy.session('customerAuth', () => {
-      cy.visit('http://localhost/BanDienThoai-main/login.php');
+      cy.visit('/login.php');
       cy.get('#loginEmail').type('dung2004@gmail.com'); // SỬA EMAIL CỦA BẠN
       cy.get('#loginPassword').type('10120204');             // SỬA PASS CỦA BẠN
       cy.get('button[name="login"]').click();
@@ -16,7 +16,7 @@ describe('Quy trình Thanh toán & Đặt hàng (Checkout Flow)', () => {
     });
 
     // 2. Đảm bảo giỏ hàng có hàng (Nếu không Checkout sẽ lỗi)
-    cy.visit('http://localhost/BanDienThoai-main/index.php');
+    cy.visit('/index.php');
     // Tìm sản phẩm và bấm thêm vào giỏ
     cy.contains('.product-card', targetProduct).find('button[type="submit"]').click();
   });
@@ -27,7 +27,7 @@ describe('Quy trình Thanh toán & Đặt hàng (Checkout Flow)', () => {
   it('Thực hiện thanh toán Chuyển khoản và giả lập thành công', () => {
     
     // --- BƯỚC 1: VÀO GIỎ HÀNG -> SANG CHECKOUT ---
-    cy.visit('http://localhost/BanDienThoai-main/pages/cart.php');
+    cy.visit('/pages/cart.php');
     
     // Bấm nút "Thanh toán" ở trang giỏ hàng
     cy.contains('a', 'Thanh toán').click();

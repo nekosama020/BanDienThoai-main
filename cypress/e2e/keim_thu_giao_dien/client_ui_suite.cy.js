@@ -1,7 +1,7 @@
 describe('Kiểm thử Giao diện Khách hàng (Đã Đăng nhập)', () => {
 
-  const homeUrl = 'http://localhost/BanDienThoai-main/index.php';
-  const loginUrl = 'http://localhost/BanDienThoai-main/login.php'; // Hoặc login_register.php
+  const homeUrl = '/index.php';
+  const loginUrl = '/login.php'; // Hoặc login_register.php
 
   // ======================================================
   // BƯỚC CHUẨN BỊ: ĐĂNG NHẬP KHÁCH HÀNG

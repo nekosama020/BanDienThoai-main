@@ -1,7 +1,7 @@
 describe('Kiểm thử Giao diện Responsive (Chỉ Mobile)', () => {
 
-  const homeUrl = 'http://localhost/BanDienThoai-main/index.php';
-  const dashboardUrl = 'http://localhost/BanDienThoai-main/admin/dashboard.php';
+  const homeUrl = '/index.php';
+  const dashboardUrl = '/admin/dashboard.php';
 
   // ======================================================
   // CASE 1: KIỂM TRA GIAO DIỆN KHÁCH HÀNG (CHƯA LOGIN)
@@ -38,7 +38,7 @@ describe('Kiểm thử Giao diện Responsive (Chỉ Mobile)', () => {
     
     // 1. Đăng nhập Admin
     cy.session('adminLogin', () => {
-        cy.visit('http://localhost/BanDienThoai-main/login.php');
+        cy.visit('/login.php');
         cy.get('#loginEmail').type('admin@admin.admin'); 
         cy.get('#loginPassword').type('10120204');
         cy.get('button[name="login"]').click();

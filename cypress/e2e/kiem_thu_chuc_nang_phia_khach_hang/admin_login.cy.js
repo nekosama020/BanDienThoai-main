@@ -1,10 +1,12 @@
 describe('Kiểm thử chức năng Đăng nhập / Đăng ký (Customer)', () => {
 
-  // HÀM NÀY SẼ CHẠY TRƯỚC MỖI TEST CASE (mỗi 'it')
+// HÀM NÀY SẼ CHẠY TRƯỚC MỖI TEST CASE
   beforeEach(() => {
-    // 1. THAY THẾ 'login_r.php' bằng tên file PHP của bạn
-    // Ví dụ: http://localhost/BanDienThoai-main/login.php (hoặc auth.php, v.v.)
-    cy.visit('http://localhost/BanDienThoai-main/login.php');
+    // --- [SỬA ĐỔI QUAN TRỌNG NHẤT] ---
+    // Thay vì viết full URL 'http://localhost/...', ta chỉ viết phần đuôi.
+    // Cypress sẽ tự động ghép với 'baseUrl' được cấu hình trong cypress.config.js (ở máy bạn)
+    // hoặc biến môi trường CYPRESS_baseUrl (trên GitHub Actions).
+    cy.visit('/login.php'); 
   });
 
   // ========== BỘ TEST CHO CHỨC NĂNG ĐĂNG NHẬP ==========

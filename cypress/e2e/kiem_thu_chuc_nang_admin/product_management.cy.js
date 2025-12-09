@@ -8,7 +8,7 @@ describe('Chức năng Quản lý Sản phẩm (Admin)', () => {
   // ======================================================
   beforeEach(() => {
     // 1. Vào trang chủ trước
-    cy.visit('http://localhost/BanDienThoai-main/index.php');
+    cy.visit('/index.php');
 
     // 2. Tìm và bấm nút "Đăng Nhập" trên thanh menu
     // (Nếu bạn chưa đăng nhập thì nút này mới hiện)

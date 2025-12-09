@@ -5,7 +5,7 @@ describe('Chức năng Hồ sơ cá nhân & Lịch sử đơn hàng', () => {
   // ======================================================
   beforeEach(() => {
     cy.session('customerAuth', () => {
-      cy.visit('http://localhost/BanDienThoai-main/login.php');
+      cy.visit('/login.php');
       cy.get('#loginEmail').type('dung2004@gmail.com'); // SỬA EMAIL CỦA BẠN
       cy.get('#loginPassword').type('10120204');             // SỬA PASS CỦA BẠN
       cy.get('button[name="login"]').click();
@@ -18,7 +18,7 @@ describe('Chức năng Hồ sơ cá nhân & Lịch sử đơn hàng', () => {
   // ======================================================
   it('Cập nhật Email, SĐT và Địa chỉ thành công', () => {
     // 1. Vào trang hồ sơ
-    cy.visit('http://localhost/BanDienThoai-main/pages/profile.php');
+    cy.visit('/pages/profile.php');
 
     // Tạo dữ liệu ngẫu nhiên để đảm bảo mỗi lần chạy là thông tin mới
     const randomNum = Math.floor(Math.random() * 1000);
@@ -55,7 +55,7 @@ describe('Chức năng Hồ sơ cá nhân & Lịch sử đơn hàng', () => {
 
   it('Báo lỗi nếu nhập Email không hợp lệ', () => {
     // 1. Vào trang profile
-    cy.visit('http://localhost/BanDienThoai-main/pages/profile.php');
+    cy.visit('/pages/profile.php');
 
     // 2. Tắt tính năng kiểm tra email của trình duyệt (để PHP có cơ hội bắt lỗi)
     cy.get('form').invoke('attr', 'novalidate', true);
@@ -76,7 +76,7 @@ describe('Chức năng Hồ sơ cá nhân & Lịch sử đơn hàng', () => {
   // ======================================================
   it('Truy cập trang Lịch sử đơn hàng từ Trang chủ', () => {
     // 1. Vào trang chủ
-    cy.visit('http://localhost/BanDienThoai-main/index.php');
+    cy.visit('/index.php');
 
     // 2. Tìm và click vào nút "Đơn hàng" trên thanh menu
     // Dựa vào code index.php: <a href="...pages/order.php">Đơn hàng</a>

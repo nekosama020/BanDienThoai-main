@@ -1,8 +1,8 @@
 describe('Chức năng Quản trị viên (Admin Auth & Security)', () => {
 
-  const loginUrl = 'http://localhost/BanDienThoai-main/login.php';
-  const indexUrl = 'http://localhost/BanDienThoai-main/index.php';
-  const dashboardUrl = 'http://localhost/BanDienThoai-main/admin/dashboard.php';
+  const loginUrl = '/login.php';
+  const indexUrl = '/index.php';
+  const dashboardUrl = '/admin/dashboard.php';
 
   // ======================================================
   // CASE 1: QUY TRÌNH ĐĂNG NHẬP ADMIN CHUẨN

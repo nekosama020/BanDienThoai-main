@@ -5,7 +5,7 @@ describe('Chức năng Quản lý Đơn hàng (Admin)', () => {
   // ======================================================
   beforeEach(() => {
     // 1. Vào trang chủ và Login Admin
-    cy.visit('http://localhost/BanDienThoai-main/index.php');
+    cy.visit('/index.php');
 
     cy.get('body').then(($body) => {
       if ($body.find('a:contains("Đăng Nhập")').length > 0) {
