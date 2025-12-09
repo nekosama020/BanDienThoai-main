@@ -8,6 +8,15 @@ jobs:
   test-suite:
     runs-on: ubuntu-latest
 
+    # --- [QUAN TRỌNG] Đặt biến môi trường Ở ĐÂY để cả PHP và Cypress đều thấy ---
+    env:
+      DB_HOST: '127.0.0.1'
+      DB_USER: 'root'
+      DB_PASS: 'root'
+      DB_NAME: 'dbphonestore'
+      CYPRESS_baseUrl: 'http://127.0.0.1:8000/BanDienThoai-main'
+    # ---------------------------------------------------------------------------
+
     # 1. Dựng Database ảo
     services:
       mysql:
@@ -31,34 +40,30 @@ jobs:
           php-version: '8.2'
           extensions: mysqli
 
-      # 4. Nạp dữ liệu (Làm bước này TRƯỚC KHI di chuyển file)
+      # 4. Nạp dữ liệu
       - name: Import Database
         run: |
           mysql -h 127.0.0.1 -u root -proot dbphonestore < test/dbphonestore.sql
 
-      # [QUAN TRỌNG] 5. TẠO CẤU TRÚC THƯ MỤC GIỐNG XAMPP
-      # Di chuyển toàn bộ code vào thư mục con /BanDienThoai-main
-      # Để các link cứng trong code PHP hoạt động đúng.
+      # 5. TẠO CẤU TRÚC THƯ MỤC GIỐNG XAMPP
       - name: Re-structure folders like XAMPP
         run: |
           mkdir BanDienThoai-main
-          # Di chuyển tất cả file (trừ folder vừa tạo) vào trong
           rsync -av --progress . BanDienThoai-main --exclude BanDienThoai-main
-          # Dọn dẹp các file gốc ở ngoài để tránh nhầm lẫn (tùy chọn)
           find . -maxdepth 1 -not -name 'BanDienThoai-main' -not -name '.' -exec rm -rf {} +
 
-      # 6. Tạo file API Key (Lưu vào trong thư mục con mới tạo)
+      # 6. Tạo file API Key
       - name: Create API Key File
         run: |
           echo "<?php define('GEMINI_API_KEY', '${{ secrets.GEMINI_API_KEY }}'); ?>" > BanDienThoai-main/includes/env.php
 
-      # 7. Chạy Server PHP (Từ thư mục gốc bên ngoài)
-      # Lúc này URL sẽ là: http://127.0.0.1:8000/BanDienThoai-main/...
+      # 7. Chạy Server PHP
+      # (Bây giờ PHP sẽ nhận được các biến env DB_HOST... từ bên trên)
       - name: Start PHP Web Server
         run: |
           php -S 127.0.0.1:8000 &
 
-      # 8. Cài đặt npm (Chỉ định chạy trong thư mục con)
+      # 8. Cài đặt npm
       - name: Install Dependencies
         working-directory: ./BanDienThoai-main
         run: npm ci
@@ -67,17 +72,9 @@ jobs:
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
-          # Chỉ định thư mục chứa cypress (đã bị di chuyển)
           working-directory: ./BanDienThoai-main
-          # Đợi đúng đường dẫn trang chủ load xong
           wait-on: 'http://127.0.0.1:8000/BanDienThoai-main/index.php' 
-        env:
-          # Update baseUrl có kèm tên thư mục
-          CYPRESS_baseUrl: 'http://127.0.0.1:8000/BanDienThoai-main'
-          DB_HOST: '127.0.0.1'
-          DB_USER: 'root'
-          DB_PASS: 'root'
-          DB_NAME: 'dbphonestore'
+        # Không cần khai báo env ở đây nữa vì đã có ở trên cùng
 
       # 10. LƯU BẰNG CHỨNG
       - name: Upload Test Evidence
