@@ -12,7 +12,7 @@ describe('Chức năng Quản trị viên (Admin Auth & Security)', () => {
     cy.visit(loginUrl);
 
     // 2. Đăng nhập tài khoản ADMIN (Thay thông tin thật của bạn)
-    cy.get('#loginEmail').type('admin@admin.admin'); // Email admin
+    cy.get('#loginEmail').type('20222274@eaut.edu.vn'); // Email admin
     cy.get('#loginPassword').type('10120204');       // Pass admin
     cy.get('button[name="login"]').click();
 
@@ -57,8 +57,8 @@ describe('Chức năng Quản trị viên (Admin Auth & Security)', () => {
     // 1. Đăng nhập bằng tài khoản KHÁCH HÀNG (Không phải Admin)
     cy.session('customerAuth', () => {
         cy.visit(loginUrl);
-        cy.get('#loginEmail').type('dung2004@gmail.com'); // Email khách
-        cy.get('#loginPassword').type('10120204');           // Pass khách
+        cy.get('#loginEmail').type('dung02042004@gmail.com'); // Email khách
+        cy.get('#loginPassword').type('10120204A');           // Pass khách
         cy.get('button[name="login"]').click();
         cy.url().should('include', 'index.php');
     });
@@ -78,7 +78,7 @@ describe('Chức năng Quản trị viên (Admin Auth & Security)', () => {
     // Đăng nhập Admin trước
     cy.session('adminAuth', () => {
         cy.visit(loginUrl);
-        cy.get('#loginEmail').type('admin@admin.admin'); 
+        cy.get('#loginEmail').type('20222274@eaut.edu.vn'); 
         cy.get('#loginPassword').type('10120204');
         cy.get('button[name="login"]').click();
     });

@@ -10,7 +10,7 @@ describe('Chức năng Quản lý Đơn hàng (Admin)', () => {
     cy.get('body').then(($body) => {
       if ($body.find('a:contains("Đăng Nhập")').length > 0) {
         cy.contains('a', 'Đăng Nhập').click();
-        cy.get('#loginEmail').type('admin@admin.admin'); // Thay email Admin thật
+        cy.get('#loginEmail').type('20222274@eaut.edu.vn'); // Thay email Admin thật
         cy.get('#loginPassword').type('10120204');       // Thay pass Admin thật
         cy.get('button[name="login"]').click();
       }

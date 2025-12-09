@@ -39,7 +39,7 @@ describe('Kiểm thử Giao diện Responsive (Chỉ Mobile)', () => {
     // 1. Đăng nhập Admin
     cy.session('adminLogin', () => {
         cy.visit('/login.php');
-        cy.get('#loginEmail').type('admin@admin.admin'); 
+        cy.get('#loginEmail').type('20222274@eaut.edu.vn'); 
         cy.get('#loginPassword').type('10120204');
         cy.get('button[name="login"]').click();
         
@@ -77,8 +77,8 @@ describe('Kiểm thử Giao diện Responsive (Chỉ Mobile)', () => {
     cy.contains('a', 'Đăng Nhập').should('be.visible').click();
 
     // 4. Điền thông tin Khách hàng (TK bạn cung cấp)
-    cy.get('#loginEmail').type('dung2004@gmail.com'); 
-    cy.get('#loginPassword').type('10120204');
+    cy.get('#loginEmail').type('dung02042004@gmail.com'); 
+    cy.get('#loginPassword').type('10120204A');
     cy.get('button[name="login"]').click();
 
     // 5. Kiểm tra sau khi Login

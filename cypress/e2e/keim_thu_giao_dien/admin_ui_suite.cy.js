@@ -12,7 +12,7 @@ describe('Kiểm thử Giao diện Quản trị viên (Admin UI Suite)', () => {
       cy.visit('/login.php'); 
 
       // 2. Nhập thông tin Admin (Theo thông tin bạn cung cấp)
-      cy.get('#loginEmail').type('admin@admin.admin'); 
+      cy.get('#loginEmail').type('20222274@eaut.edu.vn'); 
       cy.get('#loginPassword').type('10120204');
       
       // 3. Bấm đăng nhập

@@ -17,7 +17,7 @@ describe('Quản lý Danh mục (Theo luồng người dùng thực tế)', () =
         cy.contains('a', 'Đăng Nhập').click();
 
         // --- Thực hiện Đăng nhập ---
-        cy.get('#loginEmail').type('admin@admin.admin'); // SỬA EMAIL ADMIN
+        cy.get('#loginEmail').type('20222274@eaut.edu.vn'); // SỬA EMAIL ADMIN
         cy.get('#loginPassword').type('10120204');       // SỬA PASS ADMIN
         cy.get('button[name="login"]').click();
       }

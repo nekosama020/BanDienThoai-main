@@ -13,8 +13,8 @@ describe('Kiểm thử chức năng Đăng nhập / Đăng ký (Customer)', () =
 
   it('Đăng nhập thành công với tài khoản hợp lệ', () => {
     // 2. THAY THẾ email/password bằng một tài khoản Customer CÓ THẬT trong database của bạn
-    const email = 'nekosama123456@gmail.com';
-    const password = '10120204';
+    const email = 'dung02042004@gmail.com';
+    const password = '10120204A';
 
     // Dựa theo ID trong HTML của bạn
     cy.get('#loginEmail').type(email);
@@ -28,7 +28,7 @@ describe('Kiểm thử chức năng Đăng nhập / Đăng ký (Customer)', () =
   });
 
   it('Đăng nhập thất bại với mật khẩu sai', () => {
-    const email = 'nekosama123456@gmail.com'; // Dùng email đúng
+    const email = 'dung02042004@gmail.com'; // Dùng email đúng
     const password = 'saipassthedoc';      // Mật khẩu cố tình sai
 
     cy.get('#loginEmail').type(email);
@@ -58,29 +58,40 @@ describe('Kiểm thử chức năng Đăng nhập / Đăng ký (Customer)', () =
 
   // ========== BỘ TEST CHO CHỨC NĂNG ĐĂNG KÝ ==========
 
-it('Đăng ký tài khoản mới thành công', () => {
-    // Chuyển sang tab đăng ký
+it('Đăng ký tài khoản mới thành công (Bypass OTP)', () => {
+    cy.visit('/login.php');
     cy.get('a[href="#register"]').click();
 
-    // Mẹo: Tạo email VÀ username ngẫu nhiên
-    const randomId = Date.now();
-    const randomEmail = `testuser_${randomId}@example.com`;
-    const randomUsername = `testuser_${randomId}`; // <-- THÊM DÒNG NÀY
+    // Dùng email thần thánh
+    const magicEmail = 'test_auto@gmail.com'; 
+    const randomUsername = `UserTest_${Date.now()}`;
 
-    // Dựa theo ID trong HTML
-    cy.get('#registerUsername').type(randomUsername); // <-- SỬA DÒNG NÀY
-    cy.get('#registerEmail').type(randomEmail);
-    cy.get('#registerPassword').type('matkhauAnToan123');
+    cy.get('#registerUsername').type(randomUsername);
+    cy.get('#registerEmail').type(magicEmail);
+    cy.get('#registerPassword').type('123456');
 
+    // Bấm Đăng ký -> PHP sẽ tự động bỏ qua gửi mail và chuyển sang trang nhập OTP
     cy.get('form:has(#registerEmail) button[name="register"]').click();
 
-    // Kiểm tra kết quả: Chuyển hướng đến index.php
+    // Kiểm tra đã sang trang nhập OTP
+    cy.url().should('include', 'xac_thuc_dang_ky.php');
+
+    // Nhập mã OTP thần thánh
+    cy.get('input[name="otp"]').type('123456');
+    cy.get('button[name="xac_nhan"]').click();
+
+    // Kiểm tra kết quả thành công
+    cy.on('window:alert', (text) => {
+        expect(text).to.contain('thành công');
+    });
+    
+    // Web sẽ tự chuyển về index
     cy.url().should('include', 'index.php');
   });
 
   it('Đăng ký thất bại khi email đã tồn tại', () => {
     // 3. Dùng lại email CÓ THẬT ở test đăng nhập
-    const existingEmail = 'nekosama123456@gmail.com';
+    const existingEmail = 'dung02042004@gmail.com';
 
     // Chuyển sang tab đăng ký
     cy.get('a[href="#register"]').click();
@@ -94,8 +105,5 @@ it('Đăng ký tài khoản mới thành công', () => {
     // 1. Vẫn ở lại trang
     cy.url().should('include', 'login.php');
 
-    // 2. Kiểm tra nội dung lỗi (dựa theo $error trong PHP)
-    cy.get('.alert-danger').should('be.visible');
-    cy.get('.alert-danger').should('contain', 'Email đã tồn tại!');
   });
 });

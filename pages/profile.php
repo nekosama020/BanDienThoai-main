@@ -32,13 +32,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $update_stmt = $conn->prepare($update_sql);
         $update_stmt->bind_param("sssi", $email, $phone, $address, $user_id);
 
-        if ($update_stmt->execute()) {
-            $success_message = "Cập nhật thông tin thành công!";
-            $user['email'] = $email;
-            $user['phone'] = $phone;
-            $user['address'] = $address;
-        } else {
-            $error_message = "Lỗi khi cập nhật!";
+        try {
+            // Thử thực hiện lệnh cập nhật
+            if ($update_stmt->execute()) {
+                $success_message = "Cập nhật thông tin thành công!";
+                // Cập nhật lại biến hiển thị ngay lập tức
+                $user['email'] = $email;
+                $user['phone'] = $phone;
+                $user['address'] = $address;
+            }
+        } catch (mysqli_sql_exception $e) {
+            // Nếu có lỗi SQL xảy ra, code sẽ nhảy vào đây thay vì hiện màn hình chết
+            if ($e->getCode() == 1062) { 
+                // Mã lỗi 1062 là Duplicate entry (Trùng lặp dữ liệu)
+                $error_message = "Email này đã được sử dụng bởi tài khoản khác! Vui lòng chọn email khác.";
+            } else {
+                // Các lỗi khác
+                $error_message = "Lỗi hệ thống: " . $e->getMessage();
+            }
         }
     }
 }
@@ -55,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container mt-5">
         <h2>Thông tin cá nhân</h2>
+        
         <?php if ($success_message): ?>
             <div class="alert alert-success"><?= $success_message ?></div>
         <?php elseif ($error_message): ?>

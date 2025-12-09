@@ -6,8 +6,8 @@ describe('Chức năng Hồ sơ cá nhân & Lịch sử đơn hàng', () => {
   beforeEach(() => {
     cy.session('customerAuth', () => {
       cy.visit('/login.php');
-      cy.get('#loginEmail').type('dung2004@gmail.com'); // SỬA EMAIL CỦA BẠN
-      cy.get('#loginPassword').type('10120204');             // SỬA PASS CỦA BẠN
+      cy.get('#loginEmail').type('dung02042004@gmail.com'); // SỬA EMAIL CỦA BẠN
+      cy.get('#loginPassword').type('10120204A');             // SỬA PASS CỦA BẠN
       cy.get('button[name="login"]').click();
       cy.url().should('include', 'index.php');
     });

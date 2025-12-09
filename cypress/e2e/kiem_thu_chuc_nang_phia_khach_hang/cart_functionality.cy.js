@@ -10,8 +10,8 @@ describe('Chức năng Giỏ hàng (Tập trung vào iPhone 14 Pro Max)', () => 
     // 1. Đăng nhập
     cy.session('customerAuth', () => {
       cy.visit('/login.php');
-      cy.get('#loginEmail').type('dung2004@gmail.com'); // Thay email thật
-      cy.get('#loginPassword').type('10120204');             // Thay pass thật
+      cy.get('#loginEmail').type('dung02042004@gmail.com'); // Thay email thật
+      cy.get('#loginPassword').type('10120204A');             // Thay pass thật
       cy.get('button[name="login"]').click();
 
       cy.url().should('include', 'index.php');

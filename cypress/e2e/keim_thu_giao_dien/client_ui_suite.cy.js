@@ -12,8 +12,8 @@ describe('Kiểm thử Giao diện Khách hàng (Đã Đăng nhập)', () => {
       cy.visit(loginUrl);
 
       // SỬA: Thay thông tin tài khoản Khách hàng thật của bạn vào đây
-      cy.get('#loginEmail').type('dung2004@gmail.com'); 
-      cy.get('#loginPassword').type('10120204');
+      cy.get('#loginEmail').type('dung02042004@gmail.com'); 
+      cy.get('#loginPassword').type('10120204A');
       
       cy.get('button[name="login"]').click();
 
