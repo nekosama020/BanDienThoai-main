@@ -1,16 +1,13 @@
 <?php
-session_start();
-
-// --- [SỬA 1: CHỈ THÊM ĐOẠN NÀY ĐỂ FIX LỖI 500 TRÊN GITHUB] ---
-// GitHub chạy PHP 8.2, mặc định sẽ gây lỗi 500 nếu DB có vấn đề nhỏ.
-// Dòng này giúp nó hoạt động giống XAMPP (hiện lỗi thay vì sập web).
+// --- BẬT HIỂN THỊ LỖI ĐỂ DEBUG (Giữ nguyên để theo dõi) ---
 mysqli_report(MYSQLI_REPORT_OFF);
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-// -------------------------------------------------------------
+// ----------------------------------------------------------
 
-// --- [GIỮ NGUYÊN CODE CỦA BẠN] ---
-// Dùng đường dẫn tuyệt đối để tránh lỗi không tìm thấy file
+session_start();
+
+// Kết nối DB (Giữ nguyên)
 if (file_exists(__DIR__ . '/../../includes/db.php')) {
     include __DIR__ . '/../../includes/db.php';
 } else {
@@ -28,16 +25,19 @@ $amount = $_SESSION['checkout_info']['total_price'] ?? 0;
 $method = $_SESSION['checkout_info']['payment_method'] ?? 'Unknown';
 
 if (!empty($cart_items) && $amount > 0) {
-    // 1. Tạo đơn hàng
+    // --- [SỬA Ở ĐÂY] ---
+    // Thay 'Paid' thành 'Completed' để khớp với Database
     $order_sql = "INSERT INTO orders (user_id, order_date, total_price, status, payment_method) 
-                  VALUES (?, NOW(), ?, 'Paid', ?)";
+                  VALUES (?, NOW(), ?, 'Completed', ?)";
+    // -------------------
+    
     $stmt = $conn->prepare($order_sql);
     $stmt->bind_param("ids", $user_id, $amount, $method);
     
     if ($stmt->execute()) {
         $order_id = $stmt->insert_id;
 
-        // 2. Tạo chi tiết đơn hàng
+        // Insert Details
         $detail_sql = "INSERT INTO orderdetails (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
         $stmt_detail = $conn->prepare($detail_sql);
 
@@ -45,16 +45,14 @@ if (!empty($cart_items) && $amount > 0) {
             $stmt_detail->bind_param("iiid", $order_id, $item['product_id'], $item['quantity'], $item['price']);
             $stmt_detail->execute();
 
-            // 3. Xóa sản phẩm khỏi giỏ hàng trong DB
+            // Delete Cart
             $del_cart = $conn->prepare("DELETE FROM cart WHERE user_id = ? AND product_id = ?");
             $del_cart->bind_param("ii", $user_id, $item['product_id']);
             $del_cart->execute();
         }
 
-        // 4. Xóa session tạm
         unset($_SESSION['checkout_info']);
     } else {
-        // Hiện lỗi rõ ràng nếu Insert thất bại
         die("Lỗi tạo đơn hàng: " . $stmt->error);
     }
 }
