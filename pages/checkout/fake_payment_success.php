@@ -1,27 +1,32 @@
 <?php
 session_start();
 
-// --- [FIX 1] Dùng đường dẫn tuyệt đối để tránh lỗi 500 trên GitHub ---
+// --- [SỬA 1: CHỈ THÊM ĐOẠN NÀY ĐỂ FIX LỖI 500 TRÊN GITHUB] ---
+// GitHub chạy PHP 8.2, mặc định sẽ gây lỗi 500 nếu DB có vấn đề nhỏ.
+// Dòng này giúp nó hoạt động giống XAMPP (hiện lỗi thay vì sập web).
+mysqli_report(MYSQLI_REPORT_OFF);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+// -------------------------------------------------------------
+
+// --- [GIỮ NGUYÊN CODE CỦA BẠN] ---
+// Dùng đường dẫn tuyệt đối để tránh lỗi không tìm thấy file
 if (file_exists(__DIR__ . '/../../includes/db.php')) {
     include __DIR__ . '/../../includes/db.php';
 } else {
     die("Lỗi: Không tìm thấy file kết nối database!");
 }
-// ---------------------------------------------------------------------
 
 $user_id = $_SESSION['user_id'] ?? null;
-// Nếu không có user hoặc không có thông tin checkout thì đá về trang chủ
 if (!$user_id || !isset($_SESSION['checkout_info'])) {
     header("Location: ../../index.php");
     exit();
 }
 
-// Lấy thông tin từ session
 $cart_items = $_SESSION['checkout_info']['cart_items'] ?? [];
 $amount = $_SESSION['checkout_info']['total_price'] ?? 0;
 $method = $_SESSION['checkout_info']['payment_method'] ?? 'Unknown';
 
-// Insert đơn hàng
 if (!empty($cart_items) && $amount > 0) {
     // 1. Tạo đơn hàng
     $order_sql = "INSERT INTO orders (user_id, order_date, total_price, status, payment_method) 
@@ -49,6 +54,7 @@ if (!empty($cart_items) && $amount > 0) {
         // 4. Xóa session tạm
         unset($_SESSION['checkout_info']);
     } else {
+        // Hiện lỗi rõ ràng nếu Insert thất bại
         die("Lỗi tạo đơn hàng: " . $stmt->error);
     }
 }
