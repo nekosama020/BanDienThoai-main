@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 10, 2025 lúc 01:11 AM
+-- Thời gian đã tạo: Th12 11, 2025 lúc 06:32 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -57,7 +57,7 @@ INSERT INTO `categories` (`id`, `name`, `status`) VALUES
 (11, 'ROG', 'Active'),
 (13, 'Nubida', 'Active'),
 (15, 'Samsung', 'Active'),
-(39, 'Test Danh Muc 1764682821191 (Da Sua)', 'Active');
+(45, 'ABC', 'Active');
 
 -- --------------------------------------------------------
 
@@ -2076,7 +2076,10 @@ INSERT INTO `orderdetails` (`id`, `order_id`, `product_id`, `quantity`, `price`)
 (2016, 956, 48, 1, 17990000.00),
 (2017, 957, 48, 1, 17990000.00),
 (2018, 958, 48, 1, 17990000.00),
-(2019, 959, 48, 1, 17990000.00);
+(2019, 959, 48, 1, 17990000.00),
+(2020, 960, 48, 1, 17990000.00),
+(2021, 961, 49, 3, 27790000.00),
+(2022, 961, 48, 1, 17990000.00);
 
 -- --------------------------------------------------------
 
@@ -2717,7 +2720,7 @@ INSERT INTO `orders` (`id`, `user_id`, `order_date`, `total_price`, `status`, `p
 (642, 46, '2025-12-08 06:06:01', 53970000.00, '', 'Bank Transfer', 'Unpaid'),
 (643, 46, '2025-12-08 06:06:01', 53970000.00, '', 'Bank Transfer', 'Unpaid'),
 (644, 46, '2025-12-08 06:06:01', 17990000.00, '', 'Bank Transfer', 'Unpaid'),
-(645, 46, '2025-12-08 06:06:01', 35980000.00, '', 'Bank Transfer', 'Unpaid'),
+(645, 46, '2025-12-08 06:06:01', 35980000.00, 'Completed', 'Bank Transfer', 'Paid'),
 (646, 46, '2025-12-08 06:06:01', 35980000.00, '', 'Bank Transfer', 'Unpaid'),
 (647, 46, '2025-12-08 06:06:01', 35980000.00, '', 'Bank Transfer', 'Unpaid'),
 (648, 46, '2025-12-08 06:06:01', 35980000.00, '', 'Bank Transfer', 'Unpaid'),
@@ -2731,7 +2734,7 @@ INSERT INTO `orders` (`id`, `user_id`, `order_date`, `total_price`, `status`, `p
 (656, 46, '2025-12-08 06:06:01', 17990000.00, '', 'Bank Transfer', 'Unpaid'),
 (657, 46, '2025-12-08 06:06:01', 17990000.00, '', 'Bank Transfer', 'Unpaid'),
 (658, 46, '2025-12-08 06:06:01', 35980000.00, '', 'Bank Transfer', 'Unpaid'),
-(659, 46, '2025-12-08 06:06:01', 35980000.00, '', 'Bank Transfer', 'Unpaid'),
+(659, 46, '2025-12-08 06:06:01', 35980000.00, 'Completed', 'Bank Transfer', 'Paid'),
 (660, 46, '2025-12-08 06:06:01', 53970000.00, '', 'Bank Transfer', 'Unpaid'),
 (661, 46, '2025-12-08 06:06:01', 17990000.00, '', 'Bank Transfer', 'Unpaid'),
 (662, 46, '2025-12-08 06:06:02', 17990000.00, '', 'Bank Transfer', 'Unpaid'),
@@ -3030,9 +3033,11 @@ INSERT INTO `orders` (`id`, `user_id`, `order_date`, `total_price`, `status`, `p
 (954, 46, '2025-12-09 15:04:24', 35980000.00, '', 'Bank Transfer', 'Unpaid'),
 (955, 46, '2025-12-09 15:04:24', 17990000.00, '', 'Bank Transfer', 'Unpaid'),
 (956, 46, '2025-12-09 15:04:24', 17990000.00, '', 'Bank Transfer', 'Unpaid'),
-(957, 46, '2025-12-09 15:04:24', 17990000.00, '', 'Bank Transfer', 'Unpaid'),
-(958, 46, '2025-12-09 15:04:25', 17990000.00, '', 'Bank Transfer', 'Unpaid'),
-(959, 46, '2025-12-09 15:04:25', 17990000.00, '', 'Bank Transfer', 'Unpaid');
+(957, 46, '2025-12-09 15:04:24', 17990000.00, 'Completed', 'Bank Transfer', 'Paid'),
+(958, 46, '2025-12-09 15:04:25', 17990000.00, 'Processing', 'Bank Transfer', 'Paid'),
+(959, 46, '2025-12-09 15:04:25', 17990000.00, 'Completed', 'Bank Transfer', 'Paid'),
+(960, 46, '2025-12-10 14:12:25', 17990000.00, '', 'Bank Transfer', 'Unpaid'),
+(961, 46, '2025-12-11 01:05:04', 99999999.99, 'Completed', 'Bank Transfer', 'Paid');
 
 -- --------------------------------------------------------
 
@@ -3059,27 +3064,28 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `image`, `price`, `discount_price`, `stock_quantity`, `category_id`, `created_by`, `status`, `description`, `specifications`) VALUES
-(48, 'Red Magic 10 Pro', 'uploads/68db780703538.jpg', 17990000.00, 16990000.00, 50, 13, 2, 'Active', 'Điện thoại chơi game mạnh mẽ từ Nubia với chip Snapdragon hàng đầu.', 'Màn hình AMOLED 6.8\", Snapdragon 8 Gen 3, RAM 12GB, ROM 256GB, Pin 6000mAh, Sạc nhanh 80W'),
-(49, 'Xiaomi 13 Pro', 'uploads/68db77f64cfac.png', 19990000.00, 18990000.00, 40, 9, 2, 'Active', 'Flagship Xiaomi hợp tác Leica, camera chụp ảnh xuất sắc.', 'Màn hình AMOLED 6.73\", Snapdragon 8 Gen 2, RAM 12GB, ROM 256GB, Pin 4820mAh, Sạc nhanh 120W'),
-(50, 'iPhone 16 Pro Max 256GB', 'uploads/68db77e97d89e.jpg', 33990000.00, 32990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple với hiệu năng vượt trội và camera cải tiến.', 'Màn hình Super Retina XDR 6.7\", Apple A18 Bionic, RAM 8GB, ROM 256GB, Camera 48MP, Pin 4500mAh'),
-(51, 'Samsung Galaxy Z Flip6', 'uploads/68db77df357a6.jpg', 25990000.00, 24990000.00, 70, 15, 2, 'Active', 'Điện thoại gập nhỏ gọn, độc đáo từ Samsung.', 'Màn hình Dynamic AMOLED 6.7\", Snapdragon 8 Gen 2, RAM 8GB, ROM 256GB, Pin 3700mAh, Sạc nhanh 25W'),
-(52, 'OPPO Find N5', 'uploads/68db77d3cfd4c.jpg', 29990000.00, 28990000.00, 60, 10, 2, 'Active', 'Smartphone gập cao cấp từ OPPO.', 'Màn hình gập AMOLED 7.1\", Snapdragon 8 Gen 2, RAM 12GB, ROM 256GB, Pin 4800mAh, Sạc nhanh 80W'),
-(53, 'OPPO Reno10 Pro+ 5G 12GB 256GB', 'uploads/68db77c5046ff.jpg', 17990000.00, 16990000.00, 80, 10, 2, 'Active', 'Điện thoại Reno series với camera tele tiềm vọng.', 'Màn hình AMOLED 6.74\", Snapdragon 8+ Gen 1, RAM 12GB, ROM 256GB, Camera 64MP, Pin 4700mAh'),
-(54, 'ROG Phone 7 12GB 256GB', 'uploads/68db77b314349.jpg', 23990000.00, 22990000.00, 50, 11, 2, 'Active', 'Điện thoại gaming tối ưu từ ASUS ROG.', 'Màn hình AMOLED 6.78\", Snapdragon 8 Gen 2, RAM 12GB, ROM 256GB, Pin 6000mAh, Sạc nhanh 65W'),
+(48, 'Red Magic 9 Pro', 'uploads/693975e31ad53.png', 17990000.00, 16990000.00, 50, 13, 2, 'Active', 'Điện thoại chơi game mạnh mẽ từ Nubia với chip Snapdragon hàng đầu.', 'Màn hình AMOLED 6.8\", Snapdragon 8 Gen 3, RAM 12GB, ROM 256GB, Pin 6000mAh, Sạc nhanh 80W'),
+(49, 'Xiaomi 15 Ultra', 'uploads/693975a6c3d29.png', 27790000.00, 25900000.00, 40, 9, 2, 'Active', 'Flagship Xiaomi hợp tác Leica, camera chụp ảnh xuất sắc.', 'Màn hình AMOLED 6.73\", Snapdragon 8 Elite (Tiến trình sản xuất 3nm), RAM 15GB, ROM 512GB, Pin 5410mAh, Sạc nhanh 120W'),
+(50, 'iPhone 16 Pro Max 256GB', 'uploads/693975412424a.png', 37990000.00, 35990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple với hiệu năng vượt trội và camera cải tiến.', 'Màn hình Super Retina XDR 6.7\", Apple A18 Bionic, RAM 8GB, ROM 256GB, Camera 48MP, Pin 4500mAh'),
+(51, 'Samsung Galaxy Z Fold7 12GB 256GB', 'uploads/693975045610b.png', 42990000.00, 40990000.00, 70, 15, 2, 'Active', 'Điện thoại gập hiện đại, tích hợp AI độc đáo từ Samsung.', 'Màn hình Dynamic AMOLED 8.0\", Snapdragon® 8 Elite 3nm for Galaxy, RAM 12GB, ROM 256GB, Pin 4400mAh, Sạc nhanh 33W'),
+(52, 'OPPO Find N5', 'uploads/6939738c5041d.png', 29990000.00, 28990000.00, 60, 10, 2, 'Active', 'Smartphone gập cao cấp từ OPPO.', 'Màn hình gập AMOLED 7.1\", Snapdragon 8 Gen 2, RAM 12GB, ROM 256GB, Pin 4800mAh, Sạc nhanh 80W'),
+(53, 'OPPO Reno10 Pro+ 5G 12GB 256GB', 'uploads/693973fdf2e87.png', 17990000.00, 16990000.00, 80, 10, 2, 'Active', 'Điện thoại Reno series với camera tele tiềm vọng.', 'Màn hình AMOLED 6.74\", Snapdragon 8+ Gen 1, RAM 12GB, ROM 256GB, Camera 64MP, Pin 4700mAh'),
+(54, 'Điện thoại Asus ROG Phone 9 Pro (Snapdragon 8 Elite)', 'uploads/6939767cd66fd.png', 27950000.00, 26950000.00, 50, 11, 2, 'Active', 'Điện thoại gaming tối ưu từ ASUS ROG.', 'Màn hình AMOLED 6.78\", Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm)\r\n8 nhân (2x4.32 GHz & 6x3.53 GHz)\r\nGPU: Adreno 830, RAM 16GB, ROM 1TB, Pin 5800mAh, Sạc nhanh 65W'),
 (55, 'Red Magic 10 Pro', 'uploads/68db77a63139c.jpg', 17990000.00, 16990000.00, 50, 13, 2, 'Active', 'Điện thoại chơi game mạnh mẽ từ Nubia.', 'Màn hình AMOLED 6.8\", Snapdragon 8 Gen 3, RAM 12GB, ROM 256GB, Pin 6000mAh, Sạc nhanh 80W'),
 (56, 'Xiaomi 13 Pro', 'uploads/68db779777e06.png', 19990000.00, 18990000.00, 40, 9, 2, 'Active', 'Flagship Xiaomi hợp tác Leica.', 'Màn hình AMOLED 6.73\", Snapdragon 8 Gen 2, RAM 12GB, ROM 256GB, Pin 4820mAh, Sạc nhanh 120W'),
-(57, 'iPhone 16 Pro Max 256GB', 'uploads/68db777b9900d.jpg', 33990000.00, 32990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.7\", Apple A18 Bionic, RAM 8GB, ROM 256GB, Camera 48MP, Pin 4500mAh'),
-(58, 'iPhone 16 Pro Max 256GB', 'uploads/68db7770453af.jpg', 33990000.00, 32990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.7\", Apple A18 Bionic, RAM 8GB, ROM 256GB'),
-(59, 'iPhone 16 Pro Max 256GB', 'uploads/68db7767a8aae.jpg', 33990000.00, 32990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.7\", Apple A18 Bionic, RAM 8GB, ROM 256GB'),
-(60, 'iPhone 16 Pro Max 256GB', 'uploads/68db775e4b223.jpg', 33990000.00, 32990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.7\", Apple A18 Bionic, RAM 8GB, ROM 256GB'),
-(61, 'iPhone 16 Pro Max 256GB', 'uploads/68db77503b580.jpg', 33990000.00, 32990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.7\", Apple A18 Bionic, RAM 8GB, ROM 256GB'),
-(62, 'iPhone 16 Pro Max 256GB', 'uploads/68db77446a8fe.jpg', 33990000.00, 32990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.7\", Apple A18 Bionic, RAM 8GB, ROM 256GB'),
-(63, 'iPhone 16 Pro Max 256GB', 'uploads/68db77298f5e8.jpg', 33990000.00, 32990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.7\", Apple A18 Bionic, RAM 8GB, ROM 256GB'),
+(57, 'iPhone 12 Pro Max 256GB', 'uploads/69397351b0003.png', 15990000.00, 14990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.7\", Apple A14 Bionic, RAM 6GB, ROM 256GB, Camera 48MP, Pin 4500mAh'),
+(58, 'iPhone 11 256GB', 'uploads/6939730475662.png', 8990000.00, 7990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.1\", Apple A13 Bionic, RAM 4GB, ROM 128GB'),
+(59, 'iPhone 14 Pro Max 128GB', 'uploads/693972a7be857.png', 26990000.00, 24990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.7\", Apple A17 Bionic, RAM 8GB, ROM 256GB'),
+(60, 'iPhone 13 Pro Max 256GB', 'uploads/693972348d62a.png', 23990000.00, 20990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.7\", Apple A16 Bionic, RAM 8GB, ROM 256GB'),
+(61, 'iPhone 15 Pro 256GB', 'uploads/693971da028f0.png', 33990000.00, 32990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.1\", Apple A18 Bionic, RAM 8GB, ROM 256GB'),
+(62, 'iPhone 16 Pro 256GB', 'uploads/6939718f41e85.png', 34990000.00, 33990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.1\", Apple A18 Bionic, RAM 8GB, ROM 256GB'),
+(63, 'iPhone 15 Pro Max 256GB', 'uploads/6939710ab681b.png', 31990000.00, 30990000.00, 100, 8, 2, 'Active', 'iPhone mới nhất từ Apple.', 'Màn hình Super Retina XDR 6.7\", Apple A17 Bionic, RAM 8GB, ROM 256GB'),
 (65, 'Samsung Galaxy Z Flip6', 'uploads/68db770b56f4f.jpg', 25990000.00, 24990000.00, 70, 15, 2, 'Active', 'Điện thoại gập nhỏ gọn từ Samsung.', 'Màn hình Dynamic AMOLED 6.7\", Snapdragon 8 Gen 2, RAM 8GB, ROM 256GB, Pin 3700mAh'),
-(66, 'OPPO Find N5', 'uploads/68db76f4efef6.jpg', 29990000.00, 28990000.00, 60, 10, 2, 'Active', 'Smartphone gập cao cấp từ OPPO.', 'Màn hình gập AMOLED 7.1\", Snapdragon 8 Gen 2, RAM 12GB, ROM 256GB, Pin 4800mAh'),
-(67, 'OPPO Reno10 Pro+ 5G 12GB 256GB', 'uploads/68db75e98fa10.jpg', 17990000.00, 16990000.00, 80, 10, 2, 'Active', 'Điện thoại Reno series với camera tele tiềm vọng.', 'Màn hình AMOLED 6.74\", Snapdragon 8+ Gen 1, RAM 12GB, ROM 256GB, Camera 64MP'),
+(66, 'OPPO Find N5 Fold', 'uploads/693973d25d330.png', 29990000.00, 28990000.00, 60, 10, 2, 'Active', 'Smartphone gập cao cấp từ OPPO.', 'Màn hình gập AMOLED 7.1\", Snapdragon 8 Gen 2, RAM 12GB, ROM 256GB, Pin 4800mAh'),
+(67, 'OPPO Reno10 Pro 5G 12GB 256GB', 'uploads/6939746ed6bca.png', 17990000.00, 16990000.00, 80, 10, 2, 'Active', 'Điện thoại Reno series với camera tele tiềm vọng.', 'Màn hình AMOLED 6.74\", Snapdragon 8+ Gen 1, RAM 12GB, ROM 256GB, Camera 64MP'),
 (68, 'ROG Phone 7 12GB 256GB', 'uploads/68db75d56457b.jpg', 23990000.00, 22990000.00, 50, 11, 2, 'Active', 'Điện thoại gaming tối ưu từ ASUS ROG.', 'Màn hình AMOLED 6.78\", Snapdragon 8 Gen 2, RAM 12GB, ROM 256GB, Pin 6000mAh'),
-(110, 'iPhone 14 Pro Max 1TB | Chính hãng VN/A', 'uploads/692818aa9712a.png', 26390000.00, 26290000.00, 14, 8, 2, 'Active', 'iPhone 14 Pro Max là điện thoại cao cấp của Apple, nổi bật với chip xử lý A16 Bionic mạnh mẽ, màn hình Super Retina XDR 6.7 inch công nghệ OLED với \"Dynamic Island\" thay thế tai thỏ, và hệ thống camera chính 48MP cho chất lượng ảnh ấn tượng. Máy còn có thiết kế sang trọng với khung thép không gỉ, khả năng chống nước IP68 và dung lượng pin dài. ', 'Hiệu năng: Chip xử lý A16 Bionic mang lại hiệu suất nhanh hơn và tiết kiệm năng lượng hơn.\r\nMàn hình: Màn hình OLED 6.7 inch Super Retina XDR có tần số quét 120Hz, hỗ trợ công nghệ Always-On Display.\r\nCamera: Hệ thống 3 camera sau với camera chính 48MP, camera góc siêu rộng 12MP và camera tele 12MP, cho khả năng chụp ảnh chuyên nghiệp, đặc biệt là trong điều kiện thiếu sáng.\r\nThiết kế: Khung thép không gỉ và mặt lưng kính, chống nước và bụi IP68.\r\nTính năng độc đáo: Dynamic Island (thay thế notch tai thỏ), tính năng phát hiện va chạm (Crash Detection) và SOS khẩn cấp qua vệ tinh.\r\nPin: Pin có dung lượng lớn, cho thời gian sử dụng cả ngày dài. ');
+(110, 'iPhone 14 Pro Max 1TB | Chính hãng VN/A', 'uploads/692818aa9712a.png', 26390000.00, 26290000.00, 14, 8, 2, 'Active', 'iPhone 14 Pro Max là điện thoại cao cấp của Apple, nổi bật với chip xử lý A16 Bionic mạnh mẽ, màn hình Super Retina XDR 6.7 inch công nghệ OLED với \"Dynamic Island\" thay thế tai thỏ, và hệ thống camera chính 48MP cho chất lượng ảnh ấn tượng. Máy còn có thiết kế sang trọng với khung thép không gỉ, khả năng chống nước IP68 và dung lượng pin dài. ', 'Hiệu năng: Chip xử lý A16 Bionic mang lại hiệu suất nhanh hơn và tiết kiệm năng lượng hơn.\r\nMàn hình: Màn hình OLED 6.7 inch Super Retina XDR có tần số quét 120Hz, hỗ trợ công nghệ Always-On Display.\r\nCamera: Hệ thống 3 camera sau với camera chính 48MP, camera góc siêu rộng 12MP và camera tele 12MP, cho khả năng chụp ảnh chuyên nghiệp, đặc biệt là trong điều kiện thiếu sáng.\r\nThiết kế: Khung thép không gỉ và mặt lưng kính, chống nước và bụi IP68.\r\nTính năng độc đáo: Dynamic Island (thay thế notch tai thỏ), tính năng phát hiện va chạm (Crash Detection) và SOS khẩn cấp qua vệ tinh.\r\nPin: Pin có dung lượng lớn, cho thời gian sử dụng cả ngày dài. '),
+(117, 'IP 123', 'uploads/default.jpg', 20000000.00, 19990000.00, 5, 8, 2, 'Active', '12312', '0182309');
 
 -- --------------------------------------------------------
 
@@ -3106,10 +3112,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `phone`, `address`, `role`, `created_at`, `reset_token`, `token_expiry`) VALUES
 (2, 'admin', '$2y$10$OXvNPRasD5KwOGMaC571iex2dNmT7ZtGTjykqGTOeoO/F4EjjEDB2', '20222274@eaut.edu.vn', '0123456789', 'Ài ố sì mà', 'Admin', '2025-03-05 04:13:17', NULL, NULL),
-(46, 'nekosama', '$2y$10$UrIFIoLrd30pkJiZ.7clYuk4w.ezUEW4GanGHUEo.Fw/zGAeYRfl2', 'dung02042004@gmail.com', '0914142266', 'Địa chỉ mới số 800, Hà Nội', 'Customer', '2025-11-13 03:21:38', NULL, NULL),
+(46, 'nekosama', '$2y$10$UrIFIoLrd30pkJiZ.7clYuk4w.ezUEW4GanGHUEo.Fw/zGAeYRfl2', 'dung02042004@gmail.com', '0987654321', 'Địa chỉ mới số 119, Hà Nội', 'Customer', '2025-11-13 03:21:38', NULL, NULL),
 (51, 'Nguoi Khac', '$2y$10$GKbYyBTC5i0i09sLR4lKleIa2e3YOjfRXN9DGWHamF9WMVdHrOsN.', 'customer@example.com', NULL, NULL, 'Customer', '2025-11-14 03:43:31', NULL, NULL),
 (65, 'nekosama020', '$2y$10$osdN9UcWqV0OiVSbPBVrCOu2y9RM.y9NEVnqJc0VfaOcjxmREujZG', 'vudung10122004@gmail.com', NULL, NULL, 'Customer', '2025-12-09 14:20:37', '331096', '2025-12-09 22:13:57'),
-(67, 'UserTest_1765291996950', '$2y$10$5iFeR42A.OqyvJatBA0zd.vQ/4X5IBJgn.uZQOJZdLSWpXBLe9gdm', 'test_auto@gmail.com', NULL, NULL, 'Customer', '2025-12-09 14:53:21', NULL, NULL);
+(68, 'sonh20', '$2y$10$ZJkNoSek13SbIxMZLWpCTubw0l5Hw5iLeb7..OjrXRxnPjqRpqlI.', 'caotruongson249@gmail.com', NULL, NULL, 'Customer', '2025-12-10 00:22:45', '450982', '2025-12-10 07:38:22');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -3169,37 +3175,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1717;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1729;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT cho bảng `orderdetails`
 --
 ALTER TABLE `orderdetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2020;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2023;
 
 --
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=960;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=962;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

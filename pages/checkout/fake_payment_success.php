@@ -1,10 +1,18 @@
 <?php
 session_start();
-include '../../includes/db.php';
+
+// --- [FIX 1] Dùng đường dẫn tuyệt đối để tránh lỗi 500 trên GitHub ---
+if (file_exists(__DIR__ . '/../../includes/db.php')) {
+    include __DIR__ . '/../../includes/db.php';
+} else {
+    die("Lỗi: Không tìm thấy file kết nối database!");
+}
+// ---------------------------------------------------------------------
 
 $user_id = $_SESSION['user_id'] ?? null;
-if (!$user_id) {
-    header("Location: ../index.php");
+// Nếu không có user hoặc không có thông tin checkout thì đá về trang chủ
+if (!$user_id || !isset($_SESSION['checkout_info'])) {
+    header("Location: ../../index.php");
     exit();
 }
 
@@ -15,26 +23,34 @@ $method = $_SESSION['checkout_info']['payment_method'] ?? 'Unknown';
 
 // Insert đơn hàng
 if (!empty($cart_items) && $amount > 0) {
-    $order_sql = "INSERT INTO orders (user_id, order_date, total_price, status, payment_method)
+    // 1. Tạo đơn hàng
+    $order_sql = "INSERT INTO orders (user_id, order_date, total_price, status, payment_method) 
                   VALUES (?, NOW(), ?, 'Paid', ?)";
     $stmt = $conn->prepare($order_sql);
     $stmt->bind_param("ids", $user_id, $amount, $method);
-    $stmt->execute();
-    $order_id = $stmt->insert_id;
+    
+    if ($stmt->execute()) {
+        $order_id = $stmt->insert_id;
 
-    foreach ($cart_items as $item) {
-        $detail_sql = "INSERT INTO orderdetails (order_id, product_id, quantity, price)
-                       VALUES (?, ?, ?, ?)";
-        $stmt = $conn->prepare($detail_sql);
-        $stmt->bind_param("iiid", $order_id, $item['product_id'], $item['quantity'], $item['price']);
-        $stmt->execute();
+        // 2. Tạo chi tiết đơn hàng
+        $detail_sql = "INSERT INTO orderdetails (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
+        $stmt_detail = $conn->prepare($detail_sql);
 
-        // Xóa sản phẩm khỏi cart
-        $conn->query("DELETE FROM cart WHERE user_id = $user_id AND product_id = ".$item['product_id']);
+        foreach ($cart_items as $item) {
+            $stmt_detail->bind_param("iiid", $order_id, $item['product_id'], $item['quantity'], $item['price']);
+            $stmt_detail->execute();
+
+            // 3. Xóa sản phẩm khỏi giỏ hàng trong DB
+            $del_cart = $conn->prepare("DELETE FROM cart WHERE user_id = ? AND product_id = ?");
+            $del_cart->bind_param("ii", $user_id, $item['product_id']);
+            $del_cart->execute();
+        }
+
+        // 4. Xóa session tạm
+        unset($_SESSION['checkout_info']);
+    } else {
+        die("Lỗi tạo đơn hàng: " . $stmt->error);
     }
-
-    // Xóa session tạm
-    unset($_SESSION['checkout_info']);
 }
 ?>
 <!DOCTYPE html>
@@ -43,7 +59,8 @@ if (!empty($cart_items) && $amount > 0) {
     <meta charset="UTF-8">
     <title>Thanh toán thành công</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <meta http-equiv="refresh" content="3;url=../../index.php">
+    
+    <meta http-equiv="refresh" content="1;url=../../index.php">
 </head>
 <body class="bg-light">
 <div class="container py-5">
@@ -54,7 +71,8 @@ if (!empty($cart_items) && $amount > 0) {
         <div class="card-body">
             <p>Phương thức: <strong><?= htmlspecialchars($method) ?></strong></p>
             <p>Tổng tiền: <strong><?= number_format($amount,0,',','.') ?> đ</strong></p>
-            <p>Bạn sẽ được chuyển về trang chủ trong <strong>3 giây</strong>...</p>
+            
+            <p>Bạn sẽ được chuyển về trang chủ trong <strong>1 giây</strong>...</p>
             <a href="../../index.php" class="btn btn-primary mt-2">Về trang chủ ngay</a>
         </div>
     </div>
