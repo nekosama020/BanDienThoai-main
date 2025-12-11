@@ -28,9 +28,9 @@ $products = $conn->query("SELECT * FROM products $whereQuery");
         <!-- Sidebar danh mục -->
         <div class="col-md-2 bg-light p-3">
             <h5>Danh mục sản phẩm</h5>
-            <button class="btn btn-secondary w-100 mb-2" onclick="window.location.href='index.php'">Tất cả</button>
+            <button class="btn btn-light border w-100 mb-2 text-start fw-bold" onclick="window.location.href='index.php'">Tất cả</button>
             <?php while ($category = $categories->fetch_assoc()): ?>
-                <button class="btn btn-secondary w-100 mb-2" 
+                <button class="btn btn-light border w-100 mb-2 text-start" 
                     onclick="window.location.href='index.php?category=<?= $category['id'] ?>'">
                     <?= htmlspecialchars($category['name']) ?>
                 </button>
@@ -43,8 +43,8 @@ $products = $conn->query("SELECT * FROM products $whereQuery");
             <div class="row row-cols-2 row-cols-md-5 g-3">
                 <?php while ($product = $products->fetch_assoc()): ?>
                     <div class="col">
-                        <div class="product-card p-2 text-center">
-                            <div class="product-image">
+                        <div class="product-card p-2 text-center h-100 border shadow-sm d-flex flex-column justify-content-between">
+                            <div class="product-image mb-3">
                                 <?php if (!empty($product['image'])): ?>
                                     <img src="<?= htmlspecialchars($product['image']) ?>" class="img-fluid" alt="Sản phẩm">
                                 <?php else: ?>
