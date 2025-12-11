@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 
 session_start();
 
-// Kết nối DB (Giữ nguyên)
+// Kết nối DB (Giữ nguyên
 if (file_exists(__DIR__ . '/../../includes/db.php')) {
     include __DIR__ . '/../../includes/db.php';
 } else {
